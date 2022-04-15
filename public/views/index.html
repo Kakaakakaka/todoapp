@@ -20,14 +20,60 @@
     <title>Todoアプリ</title>
   </head>
   <body>
-    <div class="container">
-      <!-- Content here -->
+  <!-- Content here -->
+    <h2>ToDoタスク一覧</h2>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+      ToDo追加
+    </button>
+    <div class="modal fade" id="exampleModalLong" tabindex="-1" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">新規ToDo</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class = " form-group ">
+              <labelfor = "text1">内容</label>
+              <input type = "text" id = "text1" class = " form-control ">
+            </div>  
+            <div class = " form-group ">
+              <labelfor = "text1">期限</label>
+              <input type = "text" id = "text1" class = " form-control ">
+            </div>
+            <div class = " form-group ">
+              <labelfor = "select1a">優先度</label>
+              <select id = "select1a" class = " form-control ">
+                <option>最優先</option>
+                <option>優先</option>
+                <option>普通</option>
+              </select>
+              </div>
+              </labelfor>   
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+            <button type="button" class="btn btn-primary">保存</button>
+          </div>
+        </div>
+      </div>
+    </div>  
+  
+  <!-- <form> -->
+    <!-- <div class="form-group">
+      <label for="exampleInputEmail1">Email address</label>
+      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
     </div>
-
-    <!-- Optional JavaScript -->
-  <body>
-    <a class="btn btn-primary" href="#" >＋タスクを追加</a>
-  </body>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Password</label>
+      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+    </div>
+    <div>
+    <button type="submit" class="btn btn-primary">Submit</button> -->
+  <!-- </div> -->
+  <!-- </form> -->
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script
