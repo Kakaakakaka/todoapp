@@ -21,15 +21,19 @@
   </head>
   <body>
   <!-- Content here -->
-  <h2>ToDoタスク一覧</h2>
-  <!--追加ボタン-->
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newtodoModalLong">
-    ToDo追加
-  </button>
+  <nav class="navbar navbar-expand-lg fixed-top navbar-dark" style="background-color:rgba(17, 215, 168, 0.998);">
+    <span class="navbar-brand mb-0 h1">ToDoタスク</span>
+    <!--追加ボタン-->
+      <form class="form-inline ml-auto">
+        <button type="button" class="btn btn-outline-light"  data-toggle="modal" data-target="#newtodo">
+          ToDo追加
+        </button>
+      </form>  
+  </nav>
 
   <!--リスト-->
   <ul id="task-list"></ul>
-  <!--<ul class="list-group">
+  <!--リスト見本<ul class="list-group">
     <li class="list-group-item category-orange">
       <div class="row">
       <div class="row align-items-center">
@@ -61,18 +65,19 @@
     </li>
    </ul>-->
    
-   <!--登録フォーム
+   <!--登録フォーム-->
   <div 
-    class="modal 
-    fade" id="newtodoModalLong" 
+    class="modal fade" 
+    id="newtodo" 
     tabindex="-1" 
-    aria-labelledby="newtodoModalLongTitle" 
+    role="dialog"
+    aria-labelledby="newtodo" 
     aria-hidden="true"
   >
-    <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="newtodoModalLongTitle">新規ToDo</h5>
+          <h5 class="modal-title" id="newtodo">新規ToDo</h5>
           <button type="button" 
             class="close" 
             data-dismiss="modal" 
@@ -81,31 +86,33 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
-          <div class = " form-group " id="create-form">
-            <label for= "task">内容</label>
-            <input type = "text" class = " form-control " id = "task" name="task">
-          </div>  
-          <div class = " form-group " id="create-form">
-            <label for= "deadline">期限</label>
-            <input type = "date" class = " form-control " id = "deadline" name = "deadline">
-          </div>
-          <div class = " form-group " id="create-form">
-            <label for= "category">優先度</label>
-            <select id = "category" class = " form-control " name="category">
-              <option value="1">最優先</option>
-              <option value="2">優先</option>
-              <option value="3">普通</option>
-            </select>
-          </div>
-            </labelfor>   
+        <div class="modal-body" id="create-form">
+          <form>
+            <div class = "form-group" id="create-form">
+              <label for= "task">内容</label>
+              <input type = "text" class = "form-control" id = "task" name="task">
+            </div>  
+            <div class = "form-group">
+              <label for= "deadline">期限</label>
+              <input type = "date" class = "form-control" id = "deadline" name = "deadline">
+            </div>
+            <div class = "form-group" id="create-form">
+              <label for= "category">優先度</label>
+              <select id = "category" class = "form-control" name="category">
+                <option value="1">最優先</option>
+                <option value="2">優先</option>
+                <option value="3">普通</option>
+              </select>
+            </div>
+          </form>
+        </div>   
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
           <button type="button" id="create-task" data-dismiss="modal" class="btn btn-primary">保存</button>
         </div>
       </div>
     </div>
-  </div>-->
+  </div>
 
 
   <!--更新フォーム-->
@@ -212,29 +219,57 @@
         );
 
         const list = response.map((item) => {
+          const date = new Date(item.deadline);
+          const year = date.getFullYear();
+          const month = ("0" + (date.getMonth() + 1)).slice(-2);
+          const day = ("0" + date.getDate()).slice(-2);
+          const deadlineVal = `${year}年${month}月${day}日`;
+          console.log(deadlineVal);
+
           //リストを表示
           return `
-            <li>
-              <span>${item.task_name}</span>
-              <span>${item.deadline}</span>
-              <span>
-                <button
-                  class="btn btn-primary"
-                  id="update-button"  
-                  data-toggle="modal" 
-                  data-target="#change" 
-                  data-id="${item.id}">
-                  更新
-                </button>
-              </span>
-              <span>
-                <button 
-                  class="btn btn-danger"
-                  id="delete-button" 
-                  data-id="${item.id}" 
-                  data-delete=${item.task_name}>削除
-                </button>
-              </span>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-2">
+                  <label class="switch__label">
+                    <input type="checkbox" class="switch__input"/>
+                    <span class="switch__content"></span>
+                    <span class="switch__circle"></span>
+                  </label>
+                </div>  
+                <div class="col-3">
+                  <span>${item.task_name}</span>
+                </div>
+                <div class="col-2">
+                  <span>${item.category_name}</span>
+                </div>  
+                <div class="col-2">  
+                  <span>${deadlineVal}</span>
+                </div>
+                <div class="col-3">  
+                  <span>
+                    <button
+                      class="btn btn-primary"
+                      id="update-button"  
+                      data-toggle="modal" 
+                      data-target="#change" 
+                      data-id="${item.id}"
+                    >
+                      更新
+                    </button>
+                  </span>
+                  <span>
+                    <button 
+                      class="btn btn-danger"
+                      id="delete-button" 
+                      data-id="${item.id}" 
+                      data-delete=${item.task_name}
+                    >
+                      削除
+                    </button>
+                  </span>
+                </div>
+              </div>
             </li>`; 
         });
 
@@ -268,6 +303,8 @@
         //保存ボタンを押した時
         $("#update-task").on("click", async function () {
           const id = $("#update-form input[name=id]").val();
+        
+        
 
           //リクエストデータをフォームから取得
           const requestData = {
@@ -285,12 +322,13 @@
 
           //画面をリロード
           window.location.reload();
+  
         });
 
         //削除ボタンを押した時
         $(document).on("click", "#delete-button", async function () {
           const taskName = $(this).data("delete");
-          if (confirm(`下記の内容を削除します。\n ${taskName}`)) {
+          if (confirm(`⚠下記のタスクを削除します\n ${taskName}`)) {
             const id = $(this).data("id");
 
             //削除APIを実行
